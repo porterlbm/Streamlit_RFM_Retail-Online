@@ -5,7 +5,7 @@ import pickle
 import joblib
 import numpy as np
 import matplotlib.pyplot as plt
-import squarify
+#import squarify
 import plotly.express as px
 
 # ----- Page setting
@@ -59,6 +59,7 @@ def get_dataset_clean():
     data1['InvoiceDate'] = pd.to_datetime(data1['InvoiceDate'], format='%d-%m-%Y %H:%M').dt.date
     data1['Revenue'] = data1['Quantity'] * data1['UnitPrice']
     return data1
+    pass
 
 # Function to predict segment using KMeans
 def predict_segmentKmean(CustomerID, data1):
@@ -81,6 +82,7 @@ def predict_segmentKmean(CustomerID, data1):
         segment_name = segments.get(cluster[0], 'Unknown segment')
         rfm_values['Cluster_Kmeans'] = segment_name
         return segment_name, rfm_values
+    pass
 
 def visualize_rfm_squarify(rfm_values):
     rfm_agg = rfm_values.groupby('Cluster_Kmeans').agg({
@@ -121,24 +123,24 @@ choice = st.sidebar.selectbox('Menu', menu)
 if choice == '🏠Home':    
     st.markdown(home, unsafe_allow_html=True)
 
-elif choice == '📈RFM':
-    st.subheader("Select data")
-    uploaded_file = st.file_uploader("Choose a file", type=['txt', 'csv'])
-    if uploaded_file is not None:
-        st.write(f"**Predicted Segment Summary For New dataset:**")
-        df = pd.read_csv(uploaded_file, encoding='latin-1')
-    else:
-        st.write(f"**Predicted Segment Summary For Retail Online dataset:**")
-        df = load_data
-    df = get_dataset_clean()
-    segment_name, rfm_values = predict_segmentKmean(df['CustomerID'], df)
-    st.write(f"**Predicted Segment Summary:**")
-    # Display segment counts
-    segment_counts = rfm_values['Cluster_Kmeans'].value_counts().reset_index(name='Count')
-    st.write(segment_counts)
-    # Visualize RFM segments
-    st.subheader("RFM Segments Visualization")
-    visualize_rfm_squarify(rfm_values)
+# elif choice == '📈RFM':
+#     st.subheader("Select data")
+#     uploaded_file = st.file_uploader("Choose a file", type=['txt', 'csv'])
+#     if uploaded_file is not None:
+#         st.write(f"**Predicted Segment Summary For New dataset:**")
+#         df = pd.read_csv(uploaded_file, encoding='latin-1')
+#     else:
+#         st.write(f"**Predicted Segment Summary For Retail Online dataset:**")
+#         df = load_data
+#     df = get_dataset_clean()
+#     segment_name, rfm_values = predict_segmentKmean(df['CustomerID'], df)
+#     st.write(f"**Predicted Segment Summary:**")
+#     # Display segment counts
+#     segment_counts = rfm_values['Cluster_Kmeans'].value_counts().reset_index(name='Count')
+#     st.write(segment_counts)
+#     # Visualize RFM segments
+#     st.subheader("RFM Segments Visualization")
+#     visualize_rfm_squarify(rfm_values)
 
 elif choice == '🛒Predict for New RFM Value':
     st.subheader("Enter New RFM Values")
