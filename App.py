@@ -10,7 +10,7 @@ import plotly.express as px
 
 # ----- Page setting
 st.set_page_config(page_title="My App", page_icon=":👥:", layout="centered")
-st.image("images/Customer segment.jpg")
+st.image("Customer segment.jpg")
 st.title("Data Science Project")
 st.header("Customer Segmentation in Online Retail")
 st.write("""
@@ -40,7 +40,7 @@ home = """
 # 1. ----- Read data (outside conditional block)
 @st.cache_data  # Consider allow_reload=True for updates if needed
 def load_data():
-    return pd.read_csv("data/OnlineRetail.csv", encoding='latin-1')
+    return pd.read_csv("OnlineRetail.csv", encoding='latin-1')
 data = load_data()
 
 # Convert DataFrame to bytes
@@ -51,9 +51,9 @@ if st.download_button(label="Download Raw Data", data=csv_file, file_name="Onlin
     st.text("Data Downloaded Successfully")
 
 # Run model
-with open('./models/kmean_model.pkl', 'rb') as file:
+with open('kmean_model.pkl', 'rb') as file:
     model_kmeans_lds6 = pickle.load(file)
-scaler = joblib.load('models/scaler.pkl')
+scaler = joblib.load('scaler.pkl')
 
 import pandas as pd
 def remove_outliers_iqr(df, X):
